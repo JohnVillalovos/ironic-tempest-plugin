@@ -24,7 +24,9 @@ from ironic_tempest_plugin import config as project_config
 _opts = [
     (project_config.baremetal_group, project_config.BaremetalGroup),
     (project_config.baremetal_features_group,
-     project_config.BaremetalFeaturesGroup)
+     project_config.BaremetalFeaturesGroup),
+    (project_config.baremetal_introspection_group,
+     project_config.BaremetalIntrospectionGroup),
 ]
 
 
@@ -37,7 +39,9 @@ class IronicTempestPlugin(plugins.TempestPlugin):
         return full_test_dir, base_path
 
     def register_opts(self, conf):
-        conf.register_opt(project_config.service_option,
+        conf.register_opt(project_config.ironic_service_option,
+                          group='service_available')
+        conf.register_opt(project_config.inspector_service_option,
                           group='service_available')
         for group, option in _opts:
             config.register_opt_group(conf, group, option)
